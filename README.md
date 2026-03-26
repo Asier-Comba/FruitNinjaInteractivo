@@ -9,7 +9,6 @@ Detección de poses en tiempo real directamente en el navegador.
 [![React](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-5-646cff?logo=vite&logoColor=white)](https://vitejs.dev)
 [![TensorFlow.js](https://img.shields.io/badge/TensorFlow.js-MoveNet-ff6f00?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/js)
-[![License](https://img.shields.io/badge/licencia-MIT-green)](LICENSE)
 
 </div>
 
