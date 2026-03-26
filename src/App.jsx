@@ -149,12 +149,24 @@ export default function App() {
         if (poses[0]) {
           const kp = poses[0].keypoints;
           const mirror = x => g.w - x;
-          const lw = kp[9], rw = kp[10];
-          if (lw?.score > 0.25) {
+          // Extrapolar centro de mano: muñeca + (muñeca - codo) * 0.35
+          const le = kp[7], lw = kp[9]; // left elbow, left wrist
+          const re = kp[8], rw = kp[10]; // right elbow, right wrist
+          if (lw?.score > 0.25 && le?.score > 0.2) {
+            const hx = mirror(lw.x + (lw.x - le.x) * 0.35);
+            const hy = lw.y + (lw.y - le.y) * 0.35;
+            g.trails.left.push({ x: hx, y: hy });
+            if (g.trails.left.length > TRAIL_LEN) g.trails.left.shift();
+          } else if (lw?.score > 0.25) {
             g.trails.left.push({ x: mirror(lw.x), y: lw.y });
             if (g.trails.left.length > TRAIL_LEN) g.trails.left.shift();
           }
-          if (rw?.score > 0.25) {
+          if (rw?.score > 0.25 && re?.score > 0.2) {
+            const hx = mirror(rw.x + (rw.x - re.x) * 0.35);
+            const hy = rw.y + (rw.y - re.y) * 0.35;
+            g.trails.right.push({ x: hx, y: hy });
+            if (g.trails.right.length > TRAIL_LEN) g.trails.right.shift();
+          } else if (rw?.score > 0.25) {
             g.trails.right.push({ x: mirror(rw.x), y: rw.y });
             if (g.trails.right.length > TRAIL_LEN) g.trails.right.shift();
           }
